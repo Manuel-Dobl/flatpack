@@ -1,9 +1,7 @@
 import unittest
 
 from textnode import TextNode, TextType, text_node_to_html_node
-from inline_markdown import *
-
-
+from inline_markdown import split_nodes_delimiter, split_nodes_image
 
 
 class TestTextNode(unittest.TestCase):
@@ -35,9 +33,12 @@ class TestTextNode(unittest.TestCase):
         self.assertEqual(html_node.value, "This is a link node")
         self.assertEqual(html_node.props["href"], "https://bootdev.com/")
 
+
 class TestInlineMarkdown(unittest.TestCase):
     def test_delim_bold(self):
-        node = TextNode("This is text with a **bolded phrase** in the middle", TextType.TEXT)
+        node = TextNode(
+            "This is text with a **bolded phrase** in the middle", TextType.TEXT
+        )
         new_nodes = split_nodes_delimiter([node], "**", TextType.BOLD)
         self.assertListEqual(
             [
@@ -87,11 +88,12 @@ class TestInlineMarkdown(unittest.TestCase):
             new_nodes,
         )
 
+
 class TestSplitNode(unittest.TestCase):
     def test_split_images(self):
         node = TextNode(
             "This is text with an ![image](https://i.imgur.com/zjjcJKZ.png) and another ![second image](https://i.imgur.com/3elNhQu.png)",
-                TextType.TEXT,
+            TextType.TEXT,
         )
         new_nodes = split_nodes_image([node])
         self.assertListEqual(
@@ -105,4 +107,3 @@ class TestSplitNode(unittest.TestCase):
             ],
             new_nodes,
         )
-

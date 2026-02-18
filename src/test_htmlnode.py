@@ -1,10 +1,9 @@
 import unittest
 
-from htmlnode import *
+from htmlnode import HTMLNode, LeafNode, ParentNode
 
 
 class TestHTMLNode(unittest.TestCase):
-
     def test_empty(self):
         node = HTMLNode("p", "this is a paragraph", children=None, props=None)
         self.assertEqual(node.props_to_html(), "")
@@ -14,10 +13,14 @@ class TestHTMLNode(unittest.TestCase):
         self.assertEqual(node.props_to_html(), ' href="https://www.boot.dev"')
 
     def test_multiple_attributes(self):
-        node = HTMLNode("a", "Boot.dev", props = {
-    "href": "https://www.google.com",
-    "target": "_blank",
-})
+        node = HTMLNode(
+            "a",
+            "Boot.dev",
+            props={
+                "href": "https://www.google.com",
+                "target": "_blank",
+            },
+        )
         expected = ' href="https://www.google.com" target="_blank"'
         self.assertEqual(node.props_to_html(), expected)
 
@@ -37,14 +40,15 @@ class TestHTMLNode(unittest.TestCase):
         self.assertEqual(
             parent_node.to_html(),
             "<div><span><b>grandchild</b></span></div>",
-
         )
 
     def test_to_html_with_multiple_children(self):
         child1 = LeafNode("span", "one")
         child2 = LeafNode("span", "two")
         parent = ParentNode("div", [child1, child2])
-        self.assertEqual(parent.to_html(), "<div><span>one</span><span>two</span></div>")
+        self.assertEqual(
+            parent.to_html(), "<div><span>one</span><span>two</span></div>"
+        )
 
     def test_to_html_raises_when_children_missing(self):
         parent = ParentNode("div", None)
@@ -52,10 +56,5 @@ class TestHTMLNode(unittest.TestCase):
             parent.to_html()
 
 
-
-
 if __name__ == "__main__":
     unittest.main()
-
-
-

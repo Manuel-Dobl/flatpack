@@ -19,8 +19,8 @@ def text_to_textnodes(text):
     nodes = split_nodes_link(nodes)
     return nodes
 
-def split_nodes_delimiter(old_nodes, delimiter, text_type):
 
+def split_nodes_delimiter(old_nodes, delimiter, text_type):
 
     new_nodes = []
 
@@ -46,12 +46,13 @@ def split_nodes_delimiter(old_nodes, delimiter, text_type):
                 split_nodes.append(node)
             else:
                 # This is the delimited text (bold, code, etc.)
-                 node = TextNode(parts[i], text_type)
-                 split_nodes.append(node)
+                node = TextNode(parts[i], text_type)
+                split_nodes.append(node)
 
         new_nodes.extend(split_nodes)
 
     return new_nodes
+
 
 def split_nodes_image(old_nodes):
 
@@ -68,7 +69,7 @@ def split_nodes_image(old_nodes):
             continue
 
         remaining_text = node.text
-        for alt,url in parts:
+        for alt, url in parts:
             sections = remaining_text.split(f"![{alt}]({url})", 1)
 
             if sections[0] != "":
@@ -85,6 +86,7 @@ def split_nodes_image(old_nodes):
 
     return new_nodes
 
+
 def split_nodes_link(old_nodes):
 
     new_nodes = []
@@ -100,7 +102,7 @@ def split_nodes_link(old_nodes):
             continue
 
         remaining_text = node.text
-        for alt,url in parts:
+        for alt, url in parts:
             sections = remaining_text.split(f"[{alt}]({url})", 1)
 
             if sections[0] != "":

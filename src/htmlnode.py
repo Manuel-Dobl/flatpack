@@ -16,7 +16,6 @@ class HTMLNode:
             value = self.props[key]
             formatted += f' {key}="{value}"'
 
-
         return formatted
 
     def __repr__(self):
@@ -39,6 +38,7 @@ class LeafNode(HTMLNode):
     def __repr__(self):
         return f"LeafNode({self.tag}, {self.value}, {self.props})"
 
+
 class ParentNode(HTMLNode):
     def __init__(self, tag, children, props=None):
         super().__init__(tag, None, children, props)
@@ -50,12 +50,9 @@ class ParentNode(HTMLNode):
         if self.children is None:
             raise ValueError("missing children")
 
-
         children_html = ""
         for x in self.children:
             child = x.to_html()
             children_html += child
 
         return f"<{self.tag}{self.props_to_html()}>{children_html}</{self.tag}>"
-
-
