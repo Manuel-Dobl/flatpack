@@ -5,6 +5,7 @@ import sys
 from getcontent import generate_page, generate_pages_recursive
 
 basepath = "/"
+dir_path_public = "./docs"
 
 
 def main():
@@ -28,7 +29,7 @@ def copy_static(src, dst):
 
 
 def copy_static_to_public():
-    dst = "public"
+    dst = "docs"
     print(f"clean: {dst}")
     shutil.rmtree(dst, ignore_errors=True)
     print(f"mkdir: {dst}")
