@@ -1,12 +1,15 @@
 from textnode import TextNode, TextType
 import os
 import shutil
+import sys
 from getcontent import generate_page, generate_pages_recursive
+
+basepath = "/"
 
 
 def main():
 
-    print("Assembly Complete")
+    print(f"Assembly Complete. Using: {basepath}")
 
 
 def copy_static(src, dst):
@@ -34,9 +37,14 @@ def copy_static_to_public():
 
 
 if __name__ == "__main__":
+    # Update basepath if a command-line argument is provided
+    if len(sys.argv) > 1:
+        basepath = sys.argv[1]
+    print(f"Assembly Complete. Using: {basepath}")
+
     copy_static_to_public()
 
-    generate_pages_recursive("content", "template.html", "public")
+    generate_pages_recursive("content", "template.html", "docs", basepath)
 
 
 main()
